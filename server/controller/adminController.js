@@ -1,0 +1,52 @@
+import { Admin } from "../models/Admin";
+
+export const createAdmin = async (req, res) => {
+  const { email, password } = req.body;
+
+  console.log("body parameters received ...");
+
+  try {
+    const exist = await Admin.findOne({ email });
+
+    if (exist) {
+      throw new Error("Email Already in use");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await Admin.create({ email, password: hashedPassword });
+
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000, // expiration set to 1 day
+    });
+
+    res.status(200).json({ message: "User signup successful", user });
+  } catch (error) {
+    console.log("Error signing up", error.message);
+
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const loginAdmin = async(req, res) => {
+
+    const {email, password} = req.body;
+
+    try {
+
+        const user =  await Admin.findUnique()
+        
+    } catch (error) {
+        
+    }
+
+
+};
+
+export const forgotPassword = () => {};

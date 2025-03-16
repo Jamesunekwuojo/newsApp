@@ -1,3 +1,5 @@
+import { uploadToCloudinary } from "../utilis/cloudinary";
+
 
 // Get paginated News
 export const getNews = async () => {
@@ -75,6 +77,14 @@ export const likeNews = async() => {
 
 // elete News
 export const deleteNews = async() => {
+
+  try {
+    const news = await News.findByIdAndDelete(req.params.id);
+    if (!news) return res.status(404).json({ error: 'News not found' });
+    res.json({ message: 'News deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
 
     
 }
