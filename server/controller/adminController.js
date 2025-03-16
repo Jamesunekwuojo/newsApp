@@ -1,5 +1,7 @@
 import { Admin } from "../models/Admin";
 
+import bcrypt from "bcrypt.js";
+
 export const createAdmin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -34,19 +36,41 @@ export const createAdmin = async (req, res) => {
   }
 };
 
-export const loginAdmin = async(req, res) => {
+export const loginAdmin = async (req, res) => {
+  const { email, password } = req.body;
 
-    const {email, password} = req.body;
+  try {
+    const user = await Admin.findOne({ email });
 
-    try {
-
-        const user =  await Admin.findUnique()
-        
-    } catch (error) {
-        
+    if (!user) {
+      return res.status(400).json({ error: "Invalid credentials" });
     }
 
+    const isMatch = await bcrypt.compare(password, Admin.password);
 
+    if (!isMatch) {
+      return res.status(400).json({ error: "Password is incorrect" });
+    }
+
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000, // expiration set to 1 day
+    });
+
+    res.status(200).json({message: "Log in successful"})
+
+
+  } catch (error) {
+
+    console.log("Error logging in:", error)
+
+
+  }
 };
 
 export const forgotPassword = () => {};
