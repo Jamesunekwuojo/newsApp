@@ -1,4 +1,4 @@
-import { uploadToCloudinary } from "../utilis/cloudinary";
+import { uploadToCloudinary } from "../utilis/cloudinary.js";
 
 
 // Get paginated News
