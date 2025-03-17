@@ -45,6 +45,7 @@ export const getnewsTag = async(req, res) => {
 export const createNews = async (req, res) => {
   try {
     const { title, text, tags, images } = req.body;
+    console.log(req.body)
     const uploadedImages = await Promise.all(
       images.map((img) => uploadToCloudinary(img))
     );

@@ -3,71 +3,56 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
-import api from "../services/api";
+import { useAuth } from "../customHook/useAuth";
+import Swal from "sweetalert2";
 
 export default function Signup() {
-
   const navigate = useNavigate();
+  const { signup } = useAuth();
 
-  const [formData, setFormData] = useState({name: "", email: "", password: ""})
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const handleChange = async (e) => {
-    const {name, value} = e.target;
-    setFormData({...formData, [name]: value})
-  }
-
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      const result = await signup(formData);
 
-      const result = api.post('/api/admin/signup', formData)
+      Swal.fire({
+        title: "Welcome",
+        text: "Successfully signed up",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
 
-      if(result.success){
+      if (result.success) {
         console.log("User created successfully");
-        navigate("/dashboard");
-        
+        navigate("/admin");
       }
-
     } catch (error) {
-      
       console.log(error.message);
     }
-
-  
   };
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
-      {/* <Link to="/" className="absolute left-8 top-8 flex items-center gap-2">
-        <Building2 className="h-6 w-6 text-blue-600" />
-        <span className="text-xl font-bold">NewsHub</span>
-      </Link> */}
-
       <div className="w-full max-w-md bg-white rounded-xl shadow-md p-6">
         <div className="space-y-1 mb-6">
           <h2 className="text-2xl font-bold">Create an account</h2>
-          <p className="text-gray-600">Enter your information to create an account</p>
+          <p className="text-gray-600">
+            Enter your information to create an account
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* <div className="grid grid-cols-1 gap-4">
-            <div className="space-y-2">
-              <label htmlFor="Name" className="block text-sm font-medium">
-                Admin name
-              </label>
-              <input
-                type="text"
-                name="name"
-                onChange={handleChange}
-                value={formData.name}
-                placeholder="John"
-                className="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none"
-              />
-            </div>
-           
-          </div> */}
-
           <div className="space-y-2">
             <label htmlFor="email" className="block text-sm font-medium">
               Email
@@ -84,7 +69,6 @@ export default function Signup() {
 
           <div className="space-y-2">
             <label htmlFor="password" className="block text-sm font-medium">
-
               Password
             </label>
             <input
@@ -95,8 +79,6 @@ export default function Signup() {
               className="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none"
             />
           </div>
-
-          
 
           <button
             type="submit"

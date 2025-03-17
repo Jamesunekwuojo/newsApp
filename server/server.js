@@ -14,7 +14,10 @@ const app = express()
 app.use(express.json());
 
 // middlewares
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',  
+    credentials: true,  
+}));
 
 app.use(cookieParser());
 app.use(express.urlencoded({extended:true}))
@@ -24,6 +27,11 @@ app.use("/api/news", newsRoutes)
 app.use("/api/admin", adminRoutes)
 app.use('/auth/check', authRoutes)
 
+
+app.get('/', (req, res) => {
+    console.log("Api is runing")
+    res.send("API is running ...")
+})
 
 
 app.listen(process.env.PORT, () => {

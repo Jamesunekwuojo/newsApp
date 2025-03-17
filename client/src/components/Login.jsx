@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-import { Building2 } from "lucide-react";
-
 import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+
+import { useAuth } from "../customHook/useAuth";
+import Swal from "sweetalert2";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -23,10 +24,17 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const result = await api.post("api/admin/login", formData);
+      const result = await login(formData);
+
+      Swal.fire({
+        title: "Welcome",
+        text: "logged in...",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
       if (result.success) {
         console.log("User login successfully");
-        navigate("/dashboard");
+        navigate("/admin");
       }
     } catch (error) {
       console.log(error);
@@ -35,14 +43,10 @@ export default function Login() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
-    
-
       <div className="w-full max-w-md bg-white rounded-xl shadow-md p-6">
         <div className="space-y-1 mb-6">
           <h2 className="text-2xl font-bold">Login</h2>
-          <p className="text-gray-600">
-            Enter your credentials to create news
-          </p>
+          <p className="text-gray-600">Enter your credentials to create news</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

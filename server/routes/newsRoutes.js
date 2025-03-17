@@ -6,11 +6,11 @@ const router = express.Router()
 
 router.get('/:id', getnewsID)
 
-router.get('/news', getNews)
+router.get('/', getNews)
 
 router.post('/newsTag', getnewsTag)
 
-router.post('/news', createNews)
+router.post('/', createNews)
 
 router.post('/newsLike', likeNews )
 
