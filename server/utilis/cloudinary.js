@@ -10,7 +10,7 @@ cloudinary.config({
 
 export const uploadToCloudinary = async (image) => {
   try {
-    const result = await cloudinary.uploader.upload(image, { folder: 'news_images' });
+    const result = await cloudinary.uploader.upload(image, { folder: 'newsImg' });
     return result.secure_url;
   } catch (error) {
     throw new Error('Image upload failed');

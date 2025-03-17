@@ -1,9 +1,16 @@
 import { Admin } from "../models/Admin.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-import bcrypt from "bcrypt.js";
+const JWT_SECRET = process.env.JWT_SECRET;
+
 
 export const createAdmin = async (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
 
   console.log("body parameters received ...");
 
@@ -28,13 +35,15 @@ export const createAdmin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // expiration set to 1 day
     });
 
+    console.log("User signup successful", user);
+
     res.status(200).json({ message: "User signup successful", user });
   } catch (error) {
-    console.log("Error signing up", error.message);
-
+    console.log("Error signing up", error);
     res.status(400).json({ error: error.message });
   }
 };
+
 
 export const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
@@ -46,7 +55,7 @@ export const loginAdmin = async (req, res) => {
       return res.status(400).json({ error: "Invalid credentials" });
     }
 
-    const isMatch = await bcrypt.compare(password, Admin.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(400).json({ error: "Password is incorrect" });
@@ -62,15 +71,11 @@ export const loginAdmin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // expiration set to 1 day
     });
 
-    res.status(200).json({message: "Log in successful"})
-
-
+    res.status(200).json({ message: "Log in successful" });
   } catch (error) {
-
-    console.log("Error logging in:", error)
-
-
+    console.log("Error logging in:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
-export const forgotPassword = () => {};
+
