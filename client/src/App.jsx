@@ -8,14 +8,16 @@ import AdminPanel from "./components/AdminPanel.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
+import Mainnav from "./components/Mainnav.jsx";
 
-// import ProtectedRoute from "./ProtectedRoute.jsx";
 
 const App = () => (
   <div className="flex min-h-screen flex-col ">
     {/* <Mainnav/> */}
 
     <Router>
+      <Mainnav/>
+
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/signup" element={<Signup />} />

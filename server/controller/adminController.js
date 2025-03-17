@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-
 export const createAdmin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -44,7 +43,6 @@ export const createAdmin = async (req, res) => {
   }
 };
 
-
 export const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -78,4 +76,7 @@ export const loginAdmin = async (req, res) => {
   }
 };
 
-
+export const logout = (req, res) => {
+  res.clearCookie("token"); // Ensure token cookie is cleared
+  res.json({ message: "Logged out" });
+};

@@ -35,16 +35,13 @@ export default function Login() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
-      <Link to="/" className="absolute left-8 top-8 flex items-center gap-2">
-        <Building2 className="h-6 w-6 text-blue-600" />
-        <span className="text-xl font-bold">TenantHub</span>
-      </Link>
+    
 
       <div className="w-full max-w-md bg-white rounded-xl shadow-md p-6">
         <div className="space-y-1 mb-6">
           <h2 className="text-2xl font-bold">Login</h2>
           <p className="text-gray-600">
-            Enter your credentials to access your account
+            Enter your credentials to create news
           </p>
         </div>
 
