@@ -6,6 +6,8 @@ import NewsList from "./components/NewsList.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import Signup from "./components/Signup.jsx";
+import Login from "./components/Login.jsx";
 
 // import ProtectedRoute from "./ProtectedRoute.jsx";
 
@@ -16,8 +18,8 @@ const App = () => (
     <Router>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/signup" element={<Homepage />} />
-        <Route path="/login" element={<AdminPanel />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/newslist" element={<NewsList />} />
         <Route path="/news/:id" element={<NewsDetail />} />
         <Route
