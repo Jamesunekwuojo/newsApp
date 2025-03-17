@@ -42,21 +42,45 @@ export const getnewsTag = async(req, res) => {
 };
 
 // Create news
+// export const createNews = async (req, res) => {
+//   try {
+//     const { title, text, tags} = req.body;
+//     console.log(req.body)
+//     const uploadedImages = await Promise.all(
+//       req.files.map((file) => uploadToCloudinary(file.buffer.toString("base64")))
+      
+//     );
+//     console.log(req.files)
+//     const news = new News({ title, text, tags:tags.split(","),  images: uploadedImages });
+
+//     await news.save();
+//     res.status(201).json(news);
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json({ error: "Server error" });
+//   }
+// };
+
 export const createNews = async (req, res) => {
   try {
-    const { title, text, tags, images } = req.body;
-    console.log(req.body)
-    const uploadedImages = await Promise.all(
-      images.map((img) => uploadToCloudinary(img))
-    );
-    const news = new News({ title, text, tags, images: uploadedImages });
+    const { title, text, tags, image } = req.body;
+    console.log("Received Data:", req.body);
+
+    if (!image) return res.status(400).json({ error: "No image provided" });
+
+    const uploadedImage = await uploadToCloudinary(image);
+    const news = new News({ title, text, tags, images: [uploadedImage] });
+
     await news.save();
+    console.log("News created successfully...", news)
+
     res.status(201).json(news);
   } catch (error) {
-    console.log(error)
+    console.error("Error creating news:", error);
     res.status(500).json({ error: "Server error" });
   }
 };
+
 
 
 

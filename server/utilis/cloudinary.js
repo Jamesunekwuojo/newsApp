@@ -1,4 +1,7 @@
-import {v2 as cloudinary} from 'cloudinary'
+import {v2 as cloudinary} from 'cloudinary';
+import dotenv from "dotenv";
+
+dotenv.config()
 
 
 cloudinary.config({
@@ -10,9 +13,16 @@ cloudinary.config({
 
 export const uploadToCloudinary = async (image) => {
   try {
-    const result = await cloudinary.uploader.upload(image, { folder: 'newsImg' });
+    if (!image) throw new Error("No image provided for upload");
+
+    const result = await cloudinary.uploader.upload(image, {
+      folder: "newsImg",
+      resource_type: "auto", // Supports image or Base64
+    });
+
     return result.secure_url;
   } catch (error) {
-    throw new Error('Image upload failed');
+    console.error("Cloudinary Upload Error:", error);
+    throw new Error("Image upload failed");
   }
 };
