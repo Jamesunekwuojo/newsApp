@@ -6,13 +6,18 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     const fetchUser = async () => {
+      console.log("Fetching user");
       try {
-        const response = await api.get("/auth/check"); // Include cookies
+        const response = await api.get("/auth/check");
+        console.log("Response:", response);
         if (response.status === 200) {
+          console.log("User data:", response.data.user);
           setUser(response.data.user);
         } else {
+          console.log("No user data received");
           setUser(null);
         }
       } catch (error) {
@@ -22,9 +27,33 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
       }
     };
-
+  
     fetchUser();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     console.log("Fetching user")
+  //     try {
+  //       const response = await api.get("/auth/check");
+  //        // Include cookies
+  //        console.log("Response:", response)
+     
+  //       if (response.status === 200) {
+  //         setUser(response.data.user);
+  //       } else {
+  //         setUser(null);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user:", error);
+  //       setUser(null);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchUser();
+  // }, []);
 
   // Signup function
   const signup = async (formData) => {

@@ -4,19 +4,21 @@ import { News } from "../models/News.js";
 // Get paginated News
 export const getNews = async (req, res) => {
   const { page = 1, limit = 3 } = req.query;
+  console.log("Incoming request to fetch paginated news");
   try {
     const news = await News.find()
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(Number(limit));
-    res.json(news);
-  } catch (err) {
+    
+
+    console.log("News fetch successfully", news)
+    res.status(201).json({ message: "News fetch successfully", news: news });
+  } catch (error) {
+    console.log("Error fetching paginated news", error)
     res.status(500).json({ error: "Server error" });
   }
 };
-
-
-
 
 // Get news by ID
 export const getnewsID = async (req, res) => {
@@ -32,7 +34,7 @@ export const getnewsID = async (req, res) => {
 };
 
 // Get news by Tag
-export const getnewsTag = async(req, res) => {
+export const getnewsTag = async (req, res) => {
   try {
     const news = await News.find({ tags: req.params.tag });
     res.json(news);
@@ -48,7 +50,7 @@ export const getnewsTag = async(req, res) => {
 //     console.log(req.body)
 //     const uploadedImages = await Promise.all(
 //       req.files.map((file) => uploadToCloudinary(file.buffer.toString("base64")))
-      
+
 //     );
 //     console.log(req.files)
 //     const news = new News({ title, text, tags:tags.split(","),  images: uploadedImages });
@@ -72,7 +74,7 @@ export const createNews = async (req, res) => {
     const news = new News({ title, text, tags, images: [uploadedImage] });
 
     await news.save();
-    console.log("News created successfully...", news)
+    console.log("News created successfully...", news);
 
     res.status(201).json(news);
   } catch (error) {
@@ -80,9 +82,6 @@ export const createNews = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-
-
-
 
 // Like News
 export const likeNews = async (req, res) => {
@@ -96,7 +95,6 @@ export const likeNews = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-
 
 // delete News
 export const deleteNews = async (req, res) => {

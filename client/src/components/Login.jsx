@@ -32,10 +32,8 @@ export default function Login() {
         icon: "success",
         confirmButtonText: "Ok",
       });
-      if (result.success) {
-        console.log("User login successfully");
-        navigate("/admin");
-      }
+      navigate("/admin");
+      
     } catch (error) {
       console.log(error);
     }

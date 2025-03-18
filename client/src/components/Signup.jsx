@@ -34,10 +34,11 @@ export default function Signup() {
         confirmButtonText: "Ok",
       });
 
-      if (result.success) {
-        console.log("User created successfully");
-        navigate("/admin");
-      }
+      navigate("/admin")
+
+      console.log(result)
+
+     
     } catch (error) {
       console.log(error.message);
     }

@@ -19,6 +19,7 @@ const NewsDetail = () => {
       <p>{news.text}</p>
       <p><strong>Tags:</strong> {news.tags.join(', ')}</p>
       <p><strong>Likes:</strong> {news.likes}</p>
+      <p><strong>views:</strong> {news.views}</p>
     </div>
   );
 };
