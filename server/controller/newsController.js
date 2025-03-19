@@ -43,25 +43,7 @@ export const getnewsTag = async (req, res) => {
   }
 };
 
-// Create news
-// export const createNews = async (req, res) => {
-//   try {
-//     const { title, text, tags} = req.body;
-//     console.log(req.body)
-//     const uploadedImages = await Promise.all(
-//       req.files.map((file) => uploadToCloudinary(file.buffer.toString("base64")))
 
-//     );
-//     console.log(req.files)
-//     const news = new News({ title, text, tags:tags.split(","),  images: uploadedImages });
-
-//     await news.save();
-//     res.status(201).json(news);
-//   } catch (error) {
-//     console.log(error)
-//     res.status(500).json({ error: "Server error" });
-//   }
-// };
 
 export const createNews = async (req, res) => {
   try {

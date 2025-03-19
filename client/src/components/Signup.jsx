@@ -32,6 +32,8 @@ export default function Signup() {
         password: "",
       })
 
+      navigate("/admin")
+
 
       // navigate("/admin")
 

@@ -25,6 +25,12 @@ export default function Login() {
 
     try {
       const result = await login(formData);
+      navigate("/admin")
+
+      setFormData({
+        email: "",
+        password: ""
+      })
   
 
 
