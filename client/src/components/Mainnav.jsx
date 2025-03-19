@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../customHook/useAuth";
 
 const Mainnav = () => {
-  const { user, logout } = useAuth();
-  console.log("User", user)
+  const { user, usermail, logout } = useAuth();
+  console.log("Useremail", usermail);
+
+  let parts = usermail.split('@');
+
+  const username = parts[0]
 
   const handleLogout = async () => {
-    await logout()
-  }
+    await logout();
+  };
 
   return (
     <div>
@@ -21,6 +25,16 @@ const Mainnav = () => {
             </Link>
           </div>
           <nav className="flex items-center gap-4">
+            {user ? (
+              <>
+                <div className="flex flex-col  items-center">
+                  <h3 className="text-white">Welcome {username}</h3>
+                  <h3></h3>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
             <Link
               to="/"
               className="text-sm font-medium text-orange-400 hover:text-orange-500"
@@ -30,7 +44,10 @@ const Mainnav = () => {
             {user ? (
               <>
                 <Link to="/login">
-                  <button onClick={handleLogout} className="text-sm px-4 py-2 rounded-md bg-orange-500 cursor-pointer text-white hover:bg-orange-600">
+                  <button
+                    onClick={handleLogout}
+                    className="text-sm px-4 py-2 rounded-md bg-orange-500 cursor-pointer text-white hover:bg-orange-600"
+                  >
                     Logout
                   </button>
                 </Link>

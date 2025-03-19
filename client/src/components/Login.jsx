@@ -25,7 +25,7 @@ export default function Login() {
 
     try {
       const result = await login(formData);
-      console.log("loggedin data", result);
+  
 
 
       // navigate("/admin");
