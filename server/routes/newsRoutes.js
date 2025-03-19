@@ -14,7 +14,7 @@ router.post('/newsTag', getnewsTag)
 
 router.post('/',  createNews)
 
-router.post('/newsLike', likeNews )
+router.post('/:id/like', likeNews )
 
 
 export default router

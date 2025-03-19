@@ -68,9 +68,25 @@ export const createNews = async (req, res) => {
 // Like News
 export const likeNews = async (req, res) => {
   try {
-    const news = await News.findById(req.params.id);
+    console.log("Incoming data", req.params.id)
+    // const news = await News.findById(req.params.id);
+    // if (!news) return res.status(404).json({ error: "News not found" });
+    // news.likes += 1;
+    // await news.save();
+    // res.json({ likes: news.likes });
+
+    const { id } = req.params;
+    const { action } = req.body; // "like" or "unlike"
+    const news = await News.findById(id);
+    
     if (!news) return res.status(404).json({ error: "News not found" });
-    news.likes += 1;
+  
+    if (action === "like") {
+      news.likes += 1;
+    } else if (action === "unlike") {
+      news.likes = Math.max(0, news.likes - 1); // Prevent negative likes
+    }
+  
     await news.save();
     res.json({ likes: news.likes });
   } catch (err) {
