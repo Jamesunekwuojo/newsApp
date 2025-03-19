@@ -4,8 +4,9 @@ export const checkAuth = (req, res) => {
 
     try {
         // Extract token from cookie
-        const token = req.cookies?.token; 
+        const token = req.cookies?.jwt; 
         if (!token) {
+            console.log("Token required")
             return res.status(401).json({ authenticated: false, message: "No token found" });
         }
 
@@ -19,6 +20,7 @@ export const checkAuth = (req, res) => {
         });
 
     } catch (error) {
+        console.log("Error in authcontroller:", error)
         return res.status(500).json({ authenticated: false, message: "Server error" });
     }
 

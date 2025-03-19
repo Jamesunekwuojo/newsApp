@@ -24,7 +24,7 @@ export const createAdmin = async (req, res) => {
 
     const user = await Admin.create({ email, password: hashedPassword });
 
-    const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+    const token = jwt.sign({ userId: user.id, email:user.email }, JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -59,7 +59,7 @@ export const loginAdmin = async (req, res) => {
       return res.status(400).json({ error: "Password is incorrect" });
     }
 
-    const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+    const token = jwt.sign({ userId: user.id, email:user.email }, JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -69,7 +69,9 @@ export const loginAdmin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // expiration set to 1 day
     });
 
-    res.status(200).json({ message: "Log in successful" });
+    console.log("Logged i succeessful")
+
+    res.status(200).json({ message: "Log in successful", user });
   } catch (error) {
     console.log("Error logging in:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -77,6 +79,8 @@ export const loginAdmin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.clearCookie("token"); // Ensure token cookie is cleared
+  
+  res.clearCookie("jwt"); // Ensure token cookie is cleared
+  console.log("Logged out successful")
   res.json({ message: "Logged out" });
 };

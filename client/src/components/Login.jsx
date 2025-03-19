@@ -25,17 +25,13 @@ export default function Login() {
 
     try {
       const result = await login(formData);
+      console.log("loggedin data", result);
 
-      Swal.fire({
-        title: "Welcome",
-        text: "logged in...",
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
-      navigate("/admin");
-      
+
+      // navigate("/admin");
     } catch (error) {
-      console.log(error);
+   
+      console.log("Error logging in", error);
     }
   };
 

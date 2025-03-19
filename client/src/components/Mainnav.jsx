@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../customHook/useAuth";
 
 const Mainnav = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   console.log("User", user)
+
+  const handleLogout = async () => {
+    await logout()
+  }
 
   return (
     <div>
@@ -26,7 +30,7 @@ const Mainnav = () => {
             {user ? (
               <>
                 <Link to="/login">
-                  <button className="text-sm px-4 py-2 rounded-md bg-orange-500 cursor-pointer text-white hover:bg-orange-600">
+                  <button onClick={handleLogout} className="text-sm px-4 py-2 rounded-md bg-orange-500 cursor-pointer text-white hover:bg-orange-600">
                     Logout
                   </button>
                 </Link>
