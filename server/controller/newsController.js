@@ -6,7 +6,7 @@ export const getNews = async (req, res) => {
   const { page = 1, limit = 3 } = req.query;
   console.log("Incoming request to fetch paginated news");
   try {
-    const news = await News.find()
+    const news = await News.find().populate("postedBy", "email")
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(Number(limit));
@@ -50,10 +50,12 @@ export const createNews = async (req, res) => {
     const { title, text, tags, image } = req.body;
     console.log("Received Data:", req.body);
 
+    const userId = req.user.id // user Id from authentication middleware
+
     if (!image) return res.status(400).json({ error: "No image provided" });
 
     const uploadedImage = await uploadToCloudinary(image);
-    const news = new News({ title, text, tags, images: [uploadedImage] });
+    const news = new News({ title, text, tags, postedBy:userId, images: [uploadedImage] });
 
     await news.save();
     console.log("News created successfully...", news);

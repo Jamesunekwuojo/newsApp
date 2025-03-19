@@ -1,6 +1,6 @@
 import express from "express";
 import { getNews, getnewsID, createNews, deleteNews, getnewsTag, likeNews } from "../controller/newsController.js";
-import multer from "multer";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router()
 
@@ -12,7 +12,7 @@ router.get('/', getNews)
 
 router.post('/newsTag', getnewsTag)
 
-router.post('/',  createNews)
+router.post('/', authMiddleware,  createNews)
 
 router.post('/:id/like', likeNews )
 
