@@ -53,6 +53,7 @@ export default function Login() {
               name="email"
               onChange={handleChange}
               type="email"
+              value={formData.email}
               placeholder="name@example.com"
               className="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none"
             />
@@ -72,6 +73,8 @@ export default function Login() {
             </div>
             <input
               name="password"
+              value={formData.password}
+              onChange={handleChange}
               type="password"
               className="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-blue-500 focus:outline-none"
             />

@@ -27,14 +27,13 @@ export default function Signup() {
     try {
       const result = await signup(formData);
 
-      Swal.fire({
-        title: "Welcome",
-        text: "Successfully signed up",
-        icon: "success",
-        confirmButtonText: "Ok",
-      });
+      setFormData({
+        email: "",
+        password: "",
+      })
 
-      navigate("/admin")
+
+      // navigate("/admin")
 
       console.log(result)
 

@@ -19,19 +19,19 @@ export const AuthProvider = ({ children }) => {
         if (response.status === 200) {
           console.log("User data:", response.data.user);
 
-          setUsermail(response?.data?.user?.email)
-          console.log("User email", response?.data?.user?.email)
+          setUsermail(response?.data?.user?.email);
+          console.log("User email", response?.data?.user?.email);
 
           setUser(response.data.user);
         } else {
           console.log("No user data received");
           setUser(null);
-          setUsermail(null)
+          setUsermail(null);
         }
       } catch (error) {
         console.error("Error fetching user:", error);
         setUser(null);
-        setUsermail(null)
+        setUsermail(null);
       } finally {
         setLoading(false);
       }
@@ -40,13 +40,19 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  
   const signup = async (formData) => {
     try {
       const response = await api.post("/api/admin/signup", formData);
 
       if (response.status === 200) {
         setUser(response.data.user);
+
+        Swal.fire({
+          title: "Welcome",
+          text: "Successfully signed up",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
         return { success: true };
       } else {
         return {
@@ -56,6 +62,12 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Error signing up:", error.response || error);
+      Swal.fire({
+        title: "Error Signing up",
+        text: error.response?.data?.error || "Error signing up",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
       return { success: false, message: error.response?.data?.message };
     }
   };
@@ -81,12 +93,11 @@ export const AuthProvider = ({ children }) => {
       console.error("Error logging in:", error);
       Swal.fire({
         title: "Error",
-        text: error.response?.data?.error||"Error logging in...",
+        text: error.response?.data?.error || "Error logging in...",
         icon: "error",
         confirmButtonText: "Ok",
       });
       return { success: false, message: error.response?.data?.message };
-   
     }
   };
 

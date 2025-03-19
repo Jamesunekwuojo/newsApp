@@ -7,6 +7,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
 export const createAdmin = async (req, res) => {
   const { email, password } = req.body;
 
+  console.log("signup parmaeters", req.body)
+
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
   }
@@ -45,6 +47,7 @@ export const createAdmin = async (req, res) => {
 
 export const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
+  console.log("Login parmaeters", req.body)
 
   try {
     const user = await Admin.findOne({ email });
