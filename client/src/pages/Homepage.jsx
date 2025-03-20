@@ -9,12 +9,6 @@ const Homepage = () => {
     <div className="flex min-h-screen flex-col items-center justify-center bg-blue-50 p-6">
 
       <WelcomeMsg/>
-     
-
-        
-
-        {/* <NewsList/> */}
-        <AdminPanel/>
 
     </div>
   )

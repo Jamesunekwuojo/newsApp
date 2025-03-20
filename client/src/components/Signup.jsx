@@ -84,7 +84,7 @@ export default function Signup() {
 
           <button
             type="submit"
-            className="w-full rounded-md bg-black py-2 text-white text-sm font-medium cursor-pointer hover:bg-black"
+            className="w-full rounded-md bg-gray-700  py-2 text-white text-sm font-medium cursor-pointer hover:bg-black"
           >
             Create Account
           </button>

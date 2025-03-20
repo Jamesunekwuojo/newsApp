@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../customHook/useAuth";
-import Swal from "sweetalert2";
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const result = await login(formData);
+      await login(formData);
       navigate("/admin")
 
       setFormData({
@@ -88,7 +88,7 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full rounded-md bg-black py-2 text-white text-sm font-medium hover:bg-black cursor-pointer"
+            className="w-full rounded-md bg-gray-700  py-2 text-white text-sm font-medium hover:bg-black cursor-pointer"
           >
             Login
           </button>
