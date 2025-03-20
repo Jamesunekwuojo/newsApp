@@ -18,7 +18,7 @@ const NewsDetail = () => {
       <img
         src={news.images[0]}
         alt={news.title}
-        className="mx-4 w-full h-80 object-cover rounded-md"
+        className="mx-4 w-full h-80 object-cover rounded-md my-4"
       />
       <div className="mx-4">
         <p>{news.text}</p>

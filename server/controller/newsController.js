@@ -106,7 +106,12 @@ export const deleteNews = async (req, res) => {
 
   try {
     const news = await News.findByIdAndDelete(req.params.id);
+
     if (!news) return res.status(404).json({ error: "News not found" });
+
+    console.log("Delete successful")
+
+
     res.json({ message: "News deleted successfully" });
   } catch (err) {
     console.log("Error deleting items", err)

@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [usermail, setUsermail] = useState(null);
+  const [usermail, setUsermail] = useState('');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -26,12 +26,12 @@ export const AuthProvider = ({ children }) => {
         } else {
           console.log("No user data received");
           setUser(null);
-          setUsermail(null);
+          setUsermail('');
         }
       } catch (error) {
         console.error("Error fetching user:", error);
         setUser(null);
-        setUsermail(null);
+        setUsermail('');
       } finally {
         setLoading(false);
       }

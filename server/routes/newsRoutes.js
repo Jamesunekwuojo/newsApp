@@ -18,5 +18,7 @@ router.post('/', authMiddleware,  createNews)
 
 router.post('/:id/like', likeNews )
 
+router.delete('/:id',  deleteNews)
+
 
 export default router
