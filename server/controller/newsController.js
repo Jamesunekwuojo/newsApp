@@ -102,11 +102,14 @@ export const likeNews = async (req, res) => {
 
 // delete News
 export const deleteNews = async (req, res) => {
+  console.log("Incommign request to delte item")
+
   try {
     const news = await News.findByIdAndDelete(req.params.id);
     if (!news) return res.status(404).json({ error: "News not found" });
     res.json({ message: "News deleted successfully" });
   } catch (err) {
+    console.log("Error deleting items", err)
     res.status(500).json({ error: "Server error" });
   }
 };

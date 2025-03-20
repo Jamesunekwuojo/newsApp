@@ -152,10 +152,10 @@
 //       setNews((prev) => [...prev, ...data.news]);
 
 //       // Initialize likedNews state based on API response
-//       const likesState = data.news.reduce((acc, item) => {
-//         acc[item._id] = item.likedByUser || false; // Backend should send this
-//         return acc;
-//       }, {});
+      // const likesState = data.news.reduce((acc, item) => {
+      //   acc[item._id] = item.likedByUser || false; // Backend should send this
+      //   return acc;
+      // }, {});
 //       setLikedNews((prev) => ({ ...prev, ...likesState }));
 //     } catch (err) {
 //       console.error("Error fetching news", err);
@@ -254,6 +254,14 @@ const NewsList = () => {
       const { data } = await api.get(`/api/news?page=${page}&limit=3`);
       console.log("News data", data.news)
       setNews((prev) => [...prev, ...data.news]);
+
+      const likesState = data.news.reduce((acc, item) => {
+        acc[item._id] = item.likedByUser || false; // Backend should send this
+        return acc;
+      }, {});
+
+      setLikedNews((prev) => ({ ...prev, ...likesState }));
+
     } catch (err) {
       console.error("Error fetching news", err);
     }
@@ -279,6 +287,8 @@ const NewsList = () => {
         )
       );
 
+     
+
       setLikedNews((prev) => ({
         ...prev,
         [id]: !isLiked, // Toggle liked state
@@ -294,6 +304,7 @@ const NewsList = () => {
     try {
       await api.delete(`/api/news/${id}`);
       setNews((prev) => prev.filter((item) => item._id !== id)); // Remove from UI
+      console.log("Delete successful " )
     } catch (err) {
       console.error("Error deleting news", err);
     }
@@ -316,7 +327,7 @@ const NewsList = () => {
                 <button 
                   className={`flex items-center space-x-1 ${
                     likedNews[item._id] ? "text-red-500" : "text-orange-400"
-                  } hover:text-orange-500`}
+                  } hover:text-orange-500 cursor-pointer`}
                   onClick={() => handleLikeToggle(item._id, likedNews[item._id])}
                 >
                   <Heart className="w-5 h-5" fill={likedNews[item._id] ? "red" : "none"} />
