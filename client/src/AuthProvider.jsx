@@ -17,10 +17,10 @@ export const AuthProvider = ({ children }) => {
         });
         console.log("Response:", response);
         if (response.status === 200) {
-          console.log("User data:", response.data.user);
+          // console.log("User data:", response.data.user);
 
           setUsermail(response?.data?.user?.email);
-          console.log("User email", response?.data?.user?.email);
+          // console.log("User email", response?.data?.user?.email);
 
           setUser(response.data.user);
         } else {
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
           setUsermail('');
         }
       } catch (error) {
-        console.error("Error fetching user:", error);
+        // console.error("Error fetching user:", error);
         setUser(null);
         setUsermail('');
       } finally {

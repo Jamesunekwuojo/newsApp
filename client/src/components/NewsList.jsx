@@ -246,13 +246,13 @@ const NewsList = () => {
 
   const [likedNews, setLikedNews] = useState({}); // Track liked state per news item
   const { user } = useAuth(); // Get logged-in user info
-  console.log("User", user)
+ 
 
   const fetchNews = async () => {
     setLoading(true);
     try {
       const { data } = await api.get(`/api/news?page=${page}&limit=3`);
-      console.log("News data", data.news)
+      
       setNews((prev) => [...prev, ...data.news]);
 
       const likesState = data.news.reduce((acc, item) => {
@@ -263,7 +263,7 @@ const NewsList = () => {
       setLikedNews((prev) => ({ ...prev, ...likesState }));
 
     } catch (err) {
-      console.error("Error fetching news", err);
+      console.log(err)
     }
     setLoading(false);
   };
