@@ -6,9 +6,16 @@ const Mainnav = () => {
   const { user, usermail, logout } = useAuth();
   console.log("Useremail", usermail);
 
-  let parts = usermail.split('@');
+  let username;
 
-  const username = parts[0]
+
+  if (usermail) {
+    let parts = usermail.split("@");
+
+    username = parts[0];
+
+ 
+  }
 
   const handleLogout = async () => {
     await logout();

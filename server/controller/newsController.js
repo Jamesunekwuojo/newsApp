@@ -6,7 +6,7 @@ export const getNews = async (req, res) => {
   const { page = 1, limit = 3 } = req.query;
   console.log("Incoming request to fetch paginated news");
   try {
-    const news = await News.find().populate("postedBy", "email")
+    const news = await News.find()
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(Number(limit));
@@ -29,6 +29,7 @@ export const getnewsID = async (req, res) => {
     await news.save();
     res.json(news);
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -50,7 +51,9 @@ export const createNews = async (req, res) => {
     const { title, text, tags, image } = req.body;
     console.log("Received Data:", req.body);
 
-    const userId = req.user.id // user Id from authentication middleware
+    const userId = req.user.userId // user Id from authentication middleware
+
+    console.log("user Id:", userId)
 
     if (!image) return res.status(400).json({ error: "No image provided" });
 
@@ -92,6 +95,7 @@ export const likeNews = async (req, res) => {
     await news.save();
     res.json({ likes: news.likes });
   } catch (err) {
+    console.log("Error liking/unliking", err)
     res.status(500).json({ error: "Server error" });
   }
 };

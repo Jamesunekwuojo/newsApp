@@ -8,7 +8,9 @@ const router = express.Router()
 
 router.get('/:id', getnewsID)
 
+
 router.get('/', getNews)
+
 
 router.post('/newsTag', getnewsTag)
 
