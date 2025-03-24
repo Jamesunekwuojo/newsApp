@@ -24,7 +24,7 @@ const Mainnav = () => {
           <div className="flex items-center gap-2">
             <Newspaper className="h-6 w-6 text-orange-500" />
             <Link to="/" className="text-xl font-bold text-orange-500">
-              NewsHub
+              UsersHub
             </Link>
           </div>
           <nav className="flex items-center gap-4">
